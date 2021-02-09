@@ -34,7 +34,7 @@
         {{ title }}
         {{ twiceTheCounter }}
         {{ thriceTheCounter }}
-        {{ test("Gareth") }}
+        {{ testFunction("Gareth") }}
         {{ category }}
         {{ sport }}
         {{ pets }}
@@ -44,13 +44,14 @@
 </template>
 
 <script>
-import { ref, computed } from "vue";
+import { defineComponent } from "vue";
+import useTestForm from "./features/testForm";
 import BaseInput from "./components/BaseInput.vue";
 import BaseSelect from "./components/BaseSelect.vue";
 import BaseCheckbox from "./components/BaseCheckbox.vue";
 import BaseRadioGroup from "./components/BaseRadioGroup.vue";
 
-export default {
+export default defineComponent({
   components: {
     BaseInput,
     BaseSelect,
@@ -58,36 +59,12 @@ export default {
     BaseRadioGroup,
   },
   setup() {
-    // this works like the data object
-    const title = ref("");
-    const pets = ref(0);
-    const sport = ref(false);
-    const counter = ref(0);
-    const category = ref("");
-    const twiceTheCounter = computed(() => counter.value * 2);
-    const thriceTheCounter = computed(() => counter.value * 3);
-    function test(param) {
-      return param + " smells";
-    }
-    const categories = ["One", "Two", "Three"];
-    const radioOptions = [
-      { label: "Yes", value: 1 },
-      { label: "No", value: 0 },
-    ];
+    const testFormState = useTestForm();
     return {
-      test,
-      pets,
-      title,
-      sport,
-      counter,
-      category,
-      categories,
-      radioOptions,
-      twiceTheCounter,
-      thriceTheCounter,
+      ...testFormState,
     };
   },
-};
+});
 </script>
 
 <style>
